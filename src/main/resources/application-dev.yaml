@@ -1,15 +1,10 @@
 spring:
   datasource:
-    username: sa
-    password: 123
-    url: jdbc:h2:mem:hyperprof
+    username: root
+    password: root123
+    url: jdbc:mysql://localhost:3306/hyperprof?useSSL=false&serverTimezone=America/Manaus
     driver-class-name: org.h2.Driver
   jpa:
     show-sql: true
-    database-plataform: org.hibernate.dialect.H2Dialect
     properties:
       "hibernate.format_sql": true
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
