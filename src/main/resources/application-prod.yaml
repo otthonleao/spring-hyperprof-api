@@ -1,5 +1,3 @@
-server:
-  port: ${HYPERPROF_PORT}
 spring:
   datasource:
     username: ${HYPERPROF_DB_USER}
