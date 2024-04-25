@@ -1,13 +1,13 @@
 package dev.otthon.hyperprof.core.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+
 import java.math.BigDecimal;
 
 
+@Data
+@Builder
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
