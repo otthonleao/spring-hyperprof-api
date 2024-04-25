@@ -5,17 +5,16 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "professores")
 @ToString(onlyExplicitlyIncluded = true)
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Professor {
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
+public class Professor extends Auditable {
 
     @Id
     @ToString.Include
@@ -45,9 +44,4 @@ public class Professor {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "create_at")
-    private LocalDateTime createAt;
-
-    @Column(name = "update_at")
-    private LocalDateTime updateAt;
 }
