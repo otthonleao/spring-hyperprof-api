@@ -2,6 +2,7 @@ package dev.otthon.hyperprof.api.professores.services;
 
 import dev.otthon.hyperprof.api.professores.dtos.ProfessorResponse;
 import dev.otthon.hyperprof.api.professores.mappers.ProfessorMapper;
+import dev.otthon.hyperprof.core.exceptions.ProfessorNotFoundException;
 import dev.otthon.hyperprof.core.repositories.ProfessorRepository;
 import org.springframework.stereotype.Service;
 
@@ -25,5 +26,12 @@ public class ProfessorServiceImpl implements ProfessorService {
                 .stream()
                 .map(professor -> professorMapper.toProfessorResponse(professor))
                 .toList();
+    }
+
+    @Override
+    public ProfessorResponse buscarProfessorPorId(Long professorId) {
+        return professorRepository.findById(professorId)
+                .map(professorMapper::toProfessorResponse)
+                .orElseThrow(ProfessorNotFoundException::new);
     }
 }
