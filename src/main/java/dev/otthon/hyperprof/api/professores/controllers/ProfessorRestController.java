@@ -1,5 +1,6 @@
 package dev.otthon.hyperprof.api.professores.controllers;
 
+import dev.otthon.hyperprof.api.common.routes.ApiRoutes;
 import dev.otthon.hyperprof.api.professores.dtos.ProfessorResponse;
 import dev.otthon.hyperprof.api.professores.services.ProfessorService;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,7 @@ public class ProfessorRestController {
 
     private final ProfessorService professorService;
 
-    @GetMapping("/api/professores")
+    @GetMapping(ApiRoutes.BUSCAR_PROFESSORES)
     public List<ProfessorResponse> buscarProfessores(@RequestParam(name = "q", required = false, defaultValue = "") String descricao) {
         return professorService.buscarProfessores(descricao);
     }
