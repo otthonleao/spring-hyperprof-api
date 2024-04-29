@@ -1,5 +1,6 @@
 package dev.otthon.hyperprof.api.professores.mappers;
 
+import dev.otthon.hyperprof.api.professores.dtos.ProfessorRequest;
 import dev.otthon.hyperprof.api.professores.dtos.ProfessorResponse;
 import dev.otthon.hyperprof.core.models.Professor;
 import org.springframework.stereotype.Component;
@@ -39,6 +40,22 @@ public class ProfessorMapperImpl implements ProfessorMapper {
                 .fotoPerfil(professor.getFotoPerfil())
                 .createdAt(professor.getCreatedAt())
                 .updatedAt(professor.getUpdatedAt())
+                .build();
+    }
+
+    @Override
+    public Professor toProfessor(ProfessorRequest professorRequest) {
+        if (professorRequest == null) {
+            return null;
+        }
+
+        return Professor.builder()
+                .nome(professorRequest.getNome())
+                .email(professorRequest.getEmail())
+                .idade(professorRequest.getIdade())
+                .descricao(professorRequest.getDescricao())
+                .valorHora(professorRequest.getValorHora())
+                .password(professorRequest.getPassword())
                 .build();
     }
 }
