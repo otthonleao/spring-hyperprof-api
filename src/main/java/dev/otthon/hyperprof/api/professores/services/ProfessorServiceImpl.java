@@ -1,5 +1,6 @@
 package dev.otthon.hyperprof.api.professores.services;
 
+import dev.otthon.hyperprof.api.professores.dtos.ProfessorRequest;
 import dev.otthon.hyperprof.api.professores.dtos.ProfessorResponse;
 import dev.otthon.hyperprof.api.professores.mappers.ProfessorMapper;
 import dev.otthon.hyperprof.core.exceptions.ProfessorNotFoundException;
@@ -33,5 +34,12 @@ public class ProfessorServiceImpl implements ProfessorService {
         return professorRepository.findById(professorId)
                 .map(professorMapper::toProfessorResponse)
                 .orElseThrow(ProfessorNotFoundException::new);
+    }
+
+    @Override
+    public ProfessorResponse cadastrarProfessor(ProfessorRequest professorRequest) {
+        var professorParaCadastrar = professorMapper.toProfessor(professorRequest);
+        var professorCadastrado = professorRepository.save(professorParaCadastrar);
+        return professorMapper.toProfessorResponse(professorCadastrado);
     }
 }
