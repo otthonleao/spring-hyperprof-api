@@ -3,6 +3,7 @@ package dev.otthon.hyperprof.api.professores.dtos;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import dev.otthon.hyperprof.api.professores.validators.ProfessorEmailIsUnique;
+import dev.otthon.hyperprof.core.validators.FieldsAreEquals;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,6 +16,7 @@ import java.math.BigDecimal;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@FieldsAreEquals(field = "password", fieldMatch = "passwordConfirmation")
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class ProfessorRequest {
 
