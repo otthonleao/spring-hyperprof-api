@@ -2,6 +2,7 @@ package dev.otthon.hyperprof.api.professores.dtos;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import dev.otthon.hyperprof.api.professores.validators.ProfessorEmailIsUnique;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,6 +27,7 @@ public class ProfessorRequest {
     @NotNull
     @NotEmpty
     @Size(min = 3, max = 255)
+    @ProfessorEmailIsUnique
     private String email;
 
     @NotNull

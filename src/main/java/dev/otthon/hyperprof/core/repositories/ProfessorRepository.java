@@ -8,5 +8,6 @@ import java.util.List;
 public interface ProfessorRepository extends JpaRepository<Professor, Long> {
 
     List<Professor> findByDescricaoContaining(String descricao);
+    boolean existsByEmail(String email);
 
 }
