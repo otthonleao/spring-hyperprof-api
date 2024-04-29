@@ -1,4 +1,4 @@
-package dev.otthon.hyperprof.core.services;
+package dev.otthon.hyperprof.core.services.authentication;
 
 import dev.otthon.hyperprof.core.models.AuthenticatedUser;
 import dev.otthon.hyperprof.core.repositories.ProfessorRepository;

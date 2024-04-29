@@ -1,0 +1,23 @@
+{
+  "properties": [
+    {
+      "name": "dev.otthon.hyperprof.core.services.token.providers.jjwt.accessTokenSiginKey",
+      "type": "java.lang.String",
+      "description": "Singing key for JWT access tokens"
+    },
+    {
+      "name": "dev.otthon.hyperprof.core.services.token.providers.jjwt.AccessTokenExpirationInSeconds",
+      "type": "java.lang.Long",
+      "description": "Expiration time in seconds for JWT access tokens"
+    },
+    {
+      "name": "dev.otthon.hyperprof.core.services.token.providers.jjwt.refreshTokenSiginKey",
+      "type": "java.lang.String",
+      "description": "Singing key for JWT refresh tokens"
+    },
+    {
+      "name": "dev.otthon.hyperprof.core.services.token.providers.jjwt.refreshTokenExpirationInSeconds",
+      "type": "java.lang.Long",
+      "description": "Expiration time in seconds for JWT refresh tokens"
+    }
+  ] }
