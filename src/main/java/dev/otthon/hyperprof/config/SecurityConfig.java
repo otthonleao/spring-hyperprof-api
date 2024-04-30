@@ -1,5 +1,6 @@
 package dev.otthon.hyperprof.config;
 
+import dev.otthon.hyperprof.api.common.filters.AccessTokenRequestFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -16,6 +18,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     private final AuthenticationEntryPoint authenticationEntryPoint;
+    private final AccessTokenRequestFilter accessTokenRequestFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -23,6 +26,7 @@ public class SecurityConfig {
                 .authorizeRequests(customizer -> customizer.anyRequest().permitAll()) // PERMITE O ACESSO EM TODAS AS ROTAS SEM ESTÁ AUTENTICADO
                 .csrf(customizer -> customizer.disable())
                 .sessionManagement(customizer -> customizer.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // CONFIG DE GERENCIAMENTO DE SESSÃO DA APLICAÇÃO
+                .addFilterBefore(accessTokenRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(customizer -> customizer.authenticationEntryPoint(authenticationEntryPoint)); // CUSTOMIZAR OS ERROS
         return http.build();
     }
