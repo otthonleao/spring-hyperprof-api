@@ -39,7 +39,7 @@ public class AuthServiceImpl implements AuthService {
             // Caso o email não exista no banco de dados dispara um erro
             throw new ProfessorNotFoundException();
         }
-
+        tokenService.invalidarTokens(refreshRequest.getRefreshToken()); // Invalida o token para que o mesmo não seja utilizado mais de uma vez
         return LoginResponse.builder()
                 .token(tokenService.gerarAccessToken(subject))
                 .refreshToken(tokenService.gerarRefreshToken(subject))

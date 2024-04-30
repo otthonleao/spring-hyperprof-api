@@ -1,22 +1,25 @@
 package dev.otthon.hyperprof.core.services.token.providers.jjwt;
 
+import dev.otthon.hyperprof.core.models.TokenInvalido;
+import dev.otthon.hyperprof.core.repositories.TokenInvalidoRepository;
 import dev.otthon.hyperprof.core.services.token.TokenService;
 import dev.otthon.hyperprof.core.services.token.TokenServiceException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
-import io.jsonwebtoken.security.SecurityException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
 public class JjwtTokenService implements TokenService {
 
     private final JjwtConfigProperties configProperties;
+    private final TokenInvalidoRepository tokenInvalidoRepository;
 
     @Override
     public String gerarAccessToken(String subject) {
@@ -48,7 +51,13 @@ public class JjwtTokenService implements TokenService {
 
     @Override
     public void invalidarTokens(String... tokens) {
+        // Transformando as Strings em Token inválido
+        var tokensInvalidos = Stream.of(tokens)
+                .map(token -> TokenInvalido.builder().token(token).build())
+                .toList();
 
+        // Salvando os tokes invalidos da lista no banco
+        tokenInvalidoRepository.saveAll(tokensInvalidos);
     }
 
     private String gerarToken(String subject, Long expirationInSeconds, String siginKey) {
@@ -65,6 +74,10 @@ public class JjwtTokenService implements TokenService {
     }
 
     private Claims getClaims(String token, String sigingKey) {
+        // Verifica se o token está inválido antes de dar permissão
+        if (tokenInvalidoRepository.existsByToken(token)) {
+            throw new TokenServiceException("ERROR: TOKEN INVÁLIDO");
+        }
         try {
             return Jwts.parser()
                     .setSigningKey(Keys.hmacShaKeyFor(sigingKey.getBytes()))
