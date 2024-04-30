@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import dev.otthon.hyperprof.api.common.dtos.ErrorResponse;
 import dev.otthon.hyperprof.api.common.dtos.ValidationErrorResponse;
 import dev.otthon.hyperprof.core.exceptions.ModelNotFoundException;
+import dev.otthon.hyperprof.core.services.token.TokenServiceException;
 import jakarta.annotation.Nullable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,18 @@ public class RestControllerExceptionHandler extends ResponseEntityExceptionHandl
     @ExceptionHandler(ModelNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleModelNotFoundException(ModelNotFoundException exception, WebRequest request) {
         var status = HttpStatus.NOT_FOUND;
+        var body = ErrorResponse.builder()
+                .status(status.value())
+                .error(status.getReasonPhrase())
+                .message(exception.getLocalizedMessage())
+                .cause(exception.getClass().getSimpleName())
+                .build();
+        return new ResponseEntity<>(body, status);
+    }
+
+    @ExceptionHandler(TokenServiceException.class)
+    public ResponseEntity<ErrorResponse> handleTokenServiceException(TokenServiceException exception, WebRequest request) {
+        var status = HttpStatus.UNAUTHORIZED;
         var body = ErrorResponse.builder()
                 .status(status.value())
                 .error(status.getReasonPhrase())

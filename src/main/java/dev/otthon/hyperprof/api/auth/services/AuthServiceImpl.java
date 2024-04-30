@@ -2,7 +2,10 @@ package dev.otthon.hyperprof.api.auth.services;
 
 import dev.otthon.hyperprof.api.auth.dtos.LoginRequest;
 import dev.otthon.hyperprof.api.auth.dtos.LoginResponse;
+import dev.otthon.hyperprof.api.auth.dtos.RefreshRequest;
+import dev.otthon.hyperprof.core.exceptions.ProfessorNotFoundException;
 import dev.otthon.hyperprof.core.models.AuthenticatedUser;
+import dev.otthon.hyperprof.core.repositories.ProfessorRepository;
 import dev.otthon.hyperprof.core.services.token.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,6 +18,7 @@ public class AuthServiceImpl implements AuthService {
 
     private final TokenService tokenService;
     private final AuthenticationManager authenticationManager;
+    private final ProfessorRepository professorRepository;
 
     @Override
     public LoginResponse login(LoginRequest loginRequest) {
@@ -27,4 +31,20 @@ public class AuthServiceImpl implements AuthService {
                 .refreshToken(tokenService.gerarRefreshToken(professor.getEmail()))
                 .build();
     }
+
+    @Override
+    public LoginResponse refresh(RefreshRequest refreshRequest) {
+        var subject = tokenService.getSubjectDoRefreshToken(refreshRequest.getRefreshToken()); // Associando o email do usaário ao refresh
+        if (!professorRepository.existsByEmail(subject)) {
+            // Caso o email não exista no banco de dados dispara um erro
+            throw new ProfessorNotFoundException();
+        }
+
+        return LoginResponse.builder()
+                .token(tokenService.gerarAccessToken(subject))
+                .refreshToken(tokenService.gerarRefreshToken(subject))
+                .build();
+    }
+
+
 }
