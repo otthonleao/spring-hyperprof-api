@@ -17,6 +17,6 @@ dev:
             providers:
               jjwt:
                 accessTokenSiginKey: 5?q_&bD)Z=Wbt|#?."$x^0S9P$$Q#_(T=GzPc()4,J~_C?tE*vO3|DWC1][9Ib-
-                AccessTokenExpirationInSeconds: 30
+                AccessTokenExpirationInSeconds: 60
                 refreshTokenSiginKey: 2:iDe*f..v"dMaZ.']3b>zQP(";S,[0$)q4hn~43n*WJ27/3GL9(#uN(61Yqgl<
-                refreshTokenExpirationInSeconds: 60
+                refreshTokenExpirationInSeconds: 120
